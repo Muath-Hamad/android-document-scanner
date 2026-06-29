@@ -1,9 +1,9 @@
 package com.websitebeaver.documentscanner.extensions
 
 import android.graphics.PointF
+import com.websitebeaver.documentscanner.models.Point
 import kotlin.math.pow
 import kotlin.math.sqrt
-import org.opencv.core.Point
 
 /**
  * converts an OpenCV point to Android point

@@ -17,6 +17,11 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: Install NDK and CMake
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" \
+            "ndk;25.2.9519653" "cmake;3.22.1"
+
       - name: Deploy to Maven Central
         run: |
           ./gradlew publishReleasePublicationToMavencentralRepository \

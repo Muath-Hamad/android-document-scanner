@@ -7,6 +7,7 @@ plugins {
 
 android {
     compileSdk 30
+    ndkVersion "25.2.9519653"
 
     defaultConfig {
         minSdk 21
@@ -14,6 +15,25 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+
+        ndk {
+            // ship the common Android ABIs; consumers can trim these with abiFilters
+            // or, better, use ABI splits / app bundles to ship one ABI per device
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.22.1"
+        }
     }
 
     buildTypes {
@@ -41,7 +61,6 @@ android {
 dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.websitebeaver:opencv:4.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -52,7 +71,7 @@ publishing {
         release(MavenPublication) {
             groupId = "com.websitebeaver"
             artifactId = "documentscanner"
-            version = "1.3.5"
+            version = "1.4.0"
 
             afterEvaluate {
                 from components.release

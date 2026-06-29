@@ -1,1 +1,4 @@
 /build
+.cxx
+# locally extracted opencv-mobile SDK (downloaded automatically by CMake)
+/src/main/cpp/opencv-mobile-*-android/

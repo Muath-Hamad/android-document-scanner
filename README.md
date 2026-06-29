@@ -10,8 +10,16 @@ apps that let users scan notes, homework, business cards, receipts, or anything 
 Open `build.gradle` and add this to `dependencies`
 
 ```bash
-implementation 'com.websitebeaver:documentscanner:1.3.5'
+implementation 'com.websitebeaver:documentscanner:1.4.0'
 ```
+
+> Since `1.4.0` the image processing runs on native code built with
+> [opencv-mobile](https://github.com/nihui/opencv-mobile) instead of the full OpenCV
+> Java SDK. You don't need to add any OpenCV dependency yourself, and the bundled
+> native libraries are much smaller. The library ships `arm64-v8a`, `armeabi-v7a`,
+> `x86` and `x86_64`; to keep your APK small, prefer publishing an Android App Bundle
+> or [ABI splits](https://developer.android.com/build/configure-apk-splits) so each
+> device only downloads one ABI.
 
 ## Examples
 

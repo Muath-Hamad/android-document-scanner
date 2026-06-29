@@ -16,13 +16,13 @@ import com.websitebeaver.documentscanner.extensions.saveToFile
 import com.websitebeaver.documentscanner.extensions.screenHeight
 import com.websitebeaver.documentscanner.extensions.screenWidth
 import com.websitebeaver.documentscanner.models.Document
+import com.websitebeaver.documentscanner.models.Point
 import com.websitebeaver.documentscanner.models.Quad
 import com.websitebeaver.documentscanner.ui.ImageCropView
 import com.websitebeaver.documentscanner.utils.CameraUtil
 import com.websitebeaver.documentscanner.utils.FileUtil
 import com.websitebeaver.documentscanner.utils.ImageUtil
 import java.io.File
-import org.opencv.core.Point
 
 /**
  * This class contains the main document scanner code. It opens the camera, lets the user
@@ -161,8 +161,8 @@ class DocumentScannerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         try {
-            // load OpenCV
-            System.loadLibrary("opencv_java4")
+            // load the native (opencv-mobile based) library
+            System.loadLibrary("documentscanner")
         } catch (exception: Exception) {
             finishIntentWithError(
                 "error starting OpenCV: ${exception.message}"

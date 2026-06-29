@@ -7,7 +7,6 @@ import com.websitebeaver.documentscanner.extensions.distance
 import com.websitebeaver.documentscanner.extensions.move
 import com.websitebeaver.documentscanner.extensions.multiply
 import com.websitebeaver.documentscanner.extensions.toPointF
-import org.opencv.core.Point
 
 /**
  * This class is used to represent the cropper. It contains 4 corners.
