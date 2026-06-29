@@ -8,9 +8,30 @@ project(documentscanner)
 # time CMake configures the project, so it does not need to be committed to the
 # repository. To use a local copy instead, pass -DOPENCV_MOBILE_DIR=/path/to/sdk
 # (the directory that contains sdk/native/jni).
+#
+# NDK COMPATIBILITY: the opencv-mobile prebuilt static libraries are compiled
+# against the libc++ / libomp that shipped with the NDK used to build that
+# release. A release built with a newer toolchain references libc++ symbols
+# (e.g. std::__libcpp_verbose_abort) that an older NDK can't provide, which
+# fails at link time with "undefined symbol" errors.
+#
+# 4.8.1 (v20) is built with clang 14 (NDK r25), and because newer libc++/libomp
+# keep those symbols for ABI stability, it links cleanly with NDK r25 AND newer
+# NDKs - so it is the most portable default. If you build with a very new NDK and
+# want the latest OpenCV, override the version to a release built with a matching
+# toolchain, e.g.:
+#   externalNativeBuild { cmake { arguments "-DOPENCV_MOBILE_VERSION=4.13.0",
+#                                            "-DOPENCV_MOBILE_RELEASE=v35" } }
+# (v35/4.13.0 requires NDK r29+).
 # ---------------------------------------------------------------------------
-set(OPENCV_MOBILE_VERSION "4.13.0" CACHE STRING "opencv-mobile version")
-set(OPENCV_MOBILE_RELEASE "v35" CACHE STRING "opencv-mobile release tag")
+# Defaults are plain (non-cache) variables so changing them here always takes
+# effect; pass -DOPENCV_MOBILE_VERSION=.../-DOPENCV_MOBILE_RELEASE=... to override.
+if(NOT DEFINED OPENCV_MOBILE_VERSION)
+    set(OPENCV_MOBILE_VERSION "4.8.1")
+endif()
+if(NOT DEFINED OPENCV_MOBILE_RELEASE)
+    set(OPENCV_MOBILE_RELEASE "v20")
+endif()
 
 if(NOT DEFINED OPENCV_MOBILE_DIR)
     set(OPENCV_MOBILE_DIR
