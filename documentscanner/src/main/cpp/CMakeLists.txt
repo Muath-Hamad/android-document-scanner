@@ -15,11 +15,13 @@ project(documentscanner)
 # (e.g. std::__libcpp_verbose_abort) that an older NDK can't provide, which
 # fails at link time with "undefined symbol" errors.
 #
-# 4.8.1 (v20) is built with clang 14 (NDK r25), and because newer libc++/libomp
-# keep those symbols for ABI stability, it links cleanly with NDK r25 AND newer
-# NDKs - so it is the most portable default. If you build with a very new NDK and
-# want the latest OpenCV, override the version to a release built with a matching
-# toolchain, e.g.:
+# 4.9.0 (v25) is built with clang 14 (NDK r25), so it links cleanly with NDK r25
+# and - because newer libc++/libomp keep those symbols for ABI stability - with
+# newer NDKs too. It is also the first release that lowered the OpenCV minimum
+# Android API level back to 21, so it matches this module's minSdk 21 (the older
+# clang-14 build 4.8.1 requires API 24). That combination makes it the most
+# portable default. If you build with a very new NDK and want the latest OpenCV,
+# override the version to a release built with a matching toolchain, e.g.:
 #   externalNativeBuild { cmake { arguments "-DOPENCV_MOBILE_VERSION=4.13.0",
 #                                            "-DOPENCV_MOBILE_RELEASE=v35" } }
 # (v35/4.13.0 requires NDK r29+).
@@ -27,10 +29,10 @@ project(documentscanner)
 # Defaults are plain (non-cache) variables so changing them here always takes
 # effect; pass -DOPENCV_MOBILE_VERSION=.../-DOPENCV_MOBILE_RELEASE=... to override.
 if(NOT DEFINED OPENCV_MOBILE_VERSION)
-    set(OPENCV_MOBILE_VERSION "4.8.1")
+    set(OPENCV_MOBILE_VERSION "4.9.0")
 endif()
 if(NOT DEFINED OPENCV_MOBILE_RELEASE)
-    set(OPENCV_MOBILE_RELEASE "v20")
+    set(OPENCV_MOBILE_RELEASE "v25")
 endif()
 
 if(NOT DEFINED OPENCV_MOBILE_DIR)
